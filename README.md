@@ -1,8 +1,8 @@
-# D-FLIPDLOP-NEGEDGE
+# JKFLIPFLOP-USING-IF-ELSE
 
-**AIM:**
+**AIM:** 
 
-To implement  D flipflop using verilog and validating their functionality using their functional tables
+To implement  JK flipflop using verilog and validating their functionality using their functional tables
 
 **SOFTWARE REQUIRED:**
 
@@ -10,52 +10,93 @@ Quartus prime
 
 **THEORY**
 
-**D Flip-Flop**
+**JK Flip-Flop**
 
-D flip-flop operates with only positive clock transitions or negative clock transitions. Whereas, D latch operates with enable signal. That means, the output of D flip-flop is insensitive to the changes in the input, D except for active transition of the clock signal. The circuit diagram of D flip-flop is shown in the following figure.
+JK flip-flop is the modified version of SR flip-flop. It operates with only positive clock transitions or negative clock transitions. The circuit diagram of JK flip-flop is shown in the following figure.
 
-![image](https://github.com/naavaneetha/D-FLIPDLOP-NEGEDGE/assets/154305477/48c81fe8-bc3f-40e7-95e2-519fc155ad51)
+![image](https://github.com/naavaneetha/JKFLIPFLOP-USING-IF-ELSE/assets/154305477/a649c30b-232b-4558-b188-fd6c09845180)
 
-This circuit has single input D and two outputs Qtt & Qtt’. The operation of D flip-flop is similar to D Latch. But, this flip-flop affects the outputs only when positive transition of the clock signal is applied instead of active enable. The following table shows the state table of D flip-flop.
 
-![image](https://github.com/naavaneetha/D-FLIPDLOP-NEGEDGE/assets/154305477/e5f3fda7-68ec-4a3a-a0a4-cf6f9cc4ab55)
+This circuit has two inputs J & K and two outputs Qtt & Qtt’. The operation of JK flip-flop is similar to SR flip-flop. Here, we considered the inputs of SR flip-flop as S = J Qtt’ and R = KQtt in order to utilize the modified SR flip-flop for 4 combinations of inputs. The following table shows the state table of JK flip-flop.
 
-Therefore, D flip-flop always Hold the information, which is available on data input, D of earlier positive transition of clock signal. From the above state table, we can directly write the next state equation as Qt+1t+1 = D
+![image](https://github.com/naavaneetha/JKFLIPFLOP-USING-IF-ELSE/assets/154305477/c4360742-e8a8-4937-b089-c46c0433f9a3)
 
-![image](https://github.com/naavaneetha/D-FLIPDLOP-NEGEDGE/assets/154305477/8592c0d8-2917-4142-91b9-d6c30dd891d2)
+ 
+Here, Qtt & Qt+1t+1 are present state & next state respectively. So, JK flip-flop can be used for one of these four functions such as Hold, Reset, Set & Complement of present state based on the input conditions, when positive transition of clock signal is applied. The following table shows the characteristic table of JK flip-flop. Present Inputs Present State Next State
+ 
+![image](https://github.com/naavaneetha/JKFLIPFLOP-USING-IF-ELSE/assets/154305477/6c275261-a6d5-4c37-a3a7-1e88ca11c4cd)
 
-Next state of D flip-flop is always equal to data input, D for every positive transition of the clock signal. Hence, D flip-flops can be used in registers, shift registers and some of the counters.
+By using three variable K-Map, we can get the simplified expression for next state, Qt+1t+1. Three variable K-Map for next state, Qt+1t+1 is shown in the following figure.
+ 
+![image](https://github.com/naavaneetha/JKFLIPFLOP-USING-IF-ELSE/assets/154305477/5174f41b-0ce0-4329-a372-6d1943ea6673)
+
+The maximum possible groupings of adjacent ones are already shown in the figure. Therefore, the simplified expression for next state Qt+1t+1 is Q(t+1)=JQ(t)′+K′Q(t)Q(t+1)=JQ(t)′+K′Q(t)
 
 **Procedure**
 
-1.Type the program in Quartus software.
-2.Compile and run the program.
-3.Generate the RTL schematic and save the logic diagram.
-4.Create nodes for inputs and outputs to generate the timing diagram.
-5.For different input combinations generate the timing diagram.Type the program in Quartus software.
+/* write all the steps invloved */
+
+1.Go to quartus software.  
+
+2.Set new environment.  
+
+3.Type the code to implement SR flipflop using verilog and validating their functionality using their functional tables.  
+
+4.Run the program.  
+
+5.Give inputs in the waveform table.   
+
+6.Run the program.  
 
 **PROGRAM**
 
-/* Program for flipflops and verify its truth table in quartus using Verilog programming. Developed by:MANIKANDAN M RegisterNumber:212224040183
+/* Program for flipflops and verify its truth table in quartus using Verilog programming. Developed by:Srinath YG RegisterNumber:212224230274
 */
-~~~
-module exp8(D,clk,Q,Qbar);
-input D,clk;
-output reg Q;
-output reg Qbar;
-initial Q=0;
-initial Qbar=1;
-always @(posedge clk)
-begin
-Q=D;
-Qbar=~D;
+```verilog
+module exp7(q, qb,j,k,clock,reset);
+    input j,k,clock,reset;
+    output reg q, qb;
+	 
+always @ (posedge (clock))
+
+    begin 
+        if (!reset)
+            begin
+               q <= q;
+               qb <=qb;
+            end   
+        
+else
+	begin
+		if(j==0&&k==0)
+			begin
+			q<=q;
+			qb<=qb;
+			end
+		else if(j!=k)
+			begin
+			q<=j;
+			qb<=k;
+			end
+		else if(j==1&&k==1)
+			begin
+			q<=~q;
+			qb<=~qb;
+			end
+	end
 end
+            
 endmodule
-~~~
+```
+
 **RTL LOGIC FOR FLIPFLOPS**
-![exp8](https://github.com/user-attachments/assets/eaa91478-19bd-4b5d-94ab-e1d3520b7f24)
+![image](https://github.com/user-attachments/assets/7f3e22a9-e690-4464-8677-83e5cf7f8e75)
+
 
 **TIMING DIGRAMS FOR FLIP FLOPS**
-![Screenshot (113)](https://github.com/user-attachments/assets/0b4a997a-7fd1-4f9e-a2ae-8bebde7d727a)
+
+![image](https://github.com/user-attachments/assets/ed02cd04-0d2d-4aa1-b806-cc3d51fd89ce)
+
+
 **RESULTS**
-Thus the  D flipflop using verilog and validating their functionality using their functional tables is verified
+Implementation of JK flipflop using verilog and validating their functionality using their functional tables is executed and the output is verified successfully.
